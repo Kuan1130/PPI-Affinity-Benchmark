@@ -1,0 +1,27 @@
+========================================
+GearNet-Res: 5-Seed Evaluation Logs
+========================================
+
+[Run 1] - Seed 0
+Pearson: 0.6558 | Spearman: 0.5544 | RMSE: 1.5471 | MAE: 1.2505
+
+[Run 2] - Seed 1
+Pearson: 0.4503 | Spearman: 0.3810 | RMSE: 1.5974 | MAE: 1.2587
+
+[Run 3] - Seed 42
+Pearson: 0.6866 | Spearman: 0.6482 | RMSE: 1.4883 | MAE: 1.1578
+
+[Run 4] - Seed 142
+Pearson: 0.4437 | Spearman: 0.3865 | RMSE: 1.5645 | MAE: 1.2185
+
+[Run 5] - Seed 4242
+Pearson: 0.6264 | Spearman: 0.4700 | RMSE: 1.4881 | MAE: 1.1966
+
+========================================
+FINAL 5-SEED AVERAGE RESULTS (GearNet-Res)
+========================================
+Pearson (Rp):  0.5726 ± 0.1043
+Spearman (Rs): 0.4880 ± 0.1021
+RMSE:          1.5371 ± 0.0431
+MAE:           1.2164 ± 0.0368
+========================================

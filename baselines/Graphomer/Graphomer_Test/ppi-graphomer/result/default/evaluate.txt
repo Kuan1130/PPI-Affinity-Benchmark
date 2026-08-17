@@ -1,0 +1,2 @@
+Evaluate all Loss: 3.9661 | Iter PPL: 52.7769
+Evaluate all R: 0.2100 
