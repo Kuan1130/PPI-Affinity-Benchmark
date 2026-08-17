@@ -1,0 +1,68 @@
+output_dir: ./output
+
+dataset:
+  class: MCGLPPI
+  lazy: True
+  pdb_dir: /root/autodl-tmp/GearNetRes_Test/pdbs/
+  train_csv: /root/autodl-tmp/GearNetRes_Test/train_split.csv
+  val_csv: /root/autodl-tmp/GearNetRes_Test/val_split.csv
+  test_csv: /root/autodl-tmp/GearNetRes_Test/test_split.csv
+  transform:
+    class: ProteinView
+    view: residue
+
+task:
+  class: PropertyPrediction
+  task: proaffinity_label
+  criterion: mse
+  metric: ["pearsonr", "spearmanr", "rmse", "mae"]
+  num_mlp_layer: 3
+  mlp_batch_norm: True
+  mlp_dropout: 0.5
+  normalization: True
+  
+  graph_construction_model:
+    class: GraphConstruction
+    node_layers:
+      - class: AlphaCarbonNode
+    edge_layers:
+      - class: SequentialEdge
+        max_distance: 2
+      - class: SpatialEdge
+        radius: 10.0
+        min_distance: 5
+      - class: KNNEdge
+        k: 10
+        min_distance: 5
+    edge_feature: gearnet
+
+  model:
+    class: GearNet
+    input_dim: 21
+    hidden_dims: [512, 512, 512, 512, 512, 512]
+    num_relation: 7
+    batch_norm: True
+    concat_hidden: True
+    short_cut: True
+    readout: sum
+
+optimizer:
+  class: AdamW
+  lr: 1.0e-4
+  weight_decay: 0
+  
+scheduler:
+  class: ReduceLROnPlateau
+  factor: 0.6
+  patience: 5
+
+engine:
+  gpus: {{ gpus }}
+  batch_size: 16
+  log_interval: 10
+  num_worker: 4
+
+metric: pearsonr [proaffinity_label] 
+
+train:
+  num_epoch: 200

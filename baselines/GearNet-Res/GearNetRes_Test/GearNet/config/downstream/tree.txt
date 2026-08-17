@@ -1,0 +1,50 @@
+列出磁碟區 新增磁碟區 的資料夾 PATH
+磁碟區序號為 00000076 E653:98E1
+E:.
+|   mcglppi_gearnet_res.yaml
+|   tree.txt
+|   
++---EC
+|       BERT.yaml
+|       CNN.yaml
+|       ESM.yaml
+|       ESM_gearnet.yaml
+|       gearnet.yaml
+|       gearnet_edge.yaml
+|       gearnet_edge_1gpu.yaml
+|       LSTM.yaml
+|       ResNet.yaml
+|       
++---Fold3D
+|       gearnet.yaml
+|       gearnet_edge.yaml
+|       gearnet_edge_ieconv.yaml
+|       gearnet_ieconv.yaml
+|       
++---GO-BP
+|       BERT.yaml
+|       CNN.yaml
+|       ESM.yaml
+|       gearnet.yaml
+|       gearnet_edge.yaml
+|       LSTM.yaml
+|       ResNet.yaml
+|       
++---GO-CC
+|       BERT.yaml
+|       CNN.yaml
+|       ESM.yaml
+|       gearnet.yaml
+|       gearnet_edge.yaml
+|       LSTM.yaml
+|       ResNet.yaml
+|       
+\---GO-MF
+        BERT.yaml
+        CNN.yaml
+        ESM.yaml
+        gearnet.yaml
+        gearnet_edge.yaml
+        LSTM.yaml
+        ResNet.yaml
+        
