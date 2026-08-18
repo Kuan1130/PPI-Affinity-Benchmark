@@ -168,11 +168,7 @@ Evaluated on the exact same strict, non-homologous 107-target test set, Graphome
 
 #### Procedures
 
-* **Residue-Scale Graph Construction:** Extract 3D structural data and represent the protein complex at the residue scale, utilizing the alpha carbon (Cα) coordinates to signify the overall position of each residue.
-
-
-* **Threshold-Based Edge Wiring:** Construct the multi-relational edges connecting these Cα nodes based indiscriminately on predefined geometric distance and sequential thresholds, rather than explicit chemical bonds.
-
+- Change your yaml in `config/downstream/`, and run `run.py` in `GearNet/`
 
 
 #### Model Optimization & Bottleneck Analysis
