@@ -87,8 +87,8 @@ All models were evaluated based on their Mean Absolute Error (MAE), Root Mean Sq
 
 |**Model**|**Pearson (Rp​)**|**Spearman (Rs​)**|**RMSE**|**MAE**|
 |---|---|---|---|---|
-|**ProAffinity**|0.4254 ± 0.0435|0.4551 ± 0.0316|1.7359 ± 0.1300|1.3275 ± 0.0794|
-|**Graphomer**|0.5339 ± 0.0713|0.5335 ± 0.0483|1.5520 ± 0.0476|1.1862 ± 0.0744|
+|**ProAffinity**|0.5293 ± 0.0548|0.4915 ± 0.0495|1.7273 ± 0.1369|1.3539 ± 0.1309|
+|**Graphomer**|0.5396 ± 0.0599|0.5403 ± 0.0402|1.5681 ± 0.0492|1.2108 ± 0.0678|
 |**GearNet-Res**|0.5725 ± 0.1015|0.5125 ± 0.0809|1.5790 ± 0.0692|1.2231 ± 0.0270|
 
 > _Detailed training logs and raw outputs can be found in the `results/` directory._
@@ -127,7 +127,7 @@ This serves as strong empirical evidence that the performance gap between ProAff
 
 #### iii. Re-evaluating the Baseline: The "Data Leakage" Issue in PPI Benchmarks
 
-In the original paper, ProAffinity reported an exceptionally high Pearson correlation of **Rp = 0.811** on the SKEMPI subset (166 complexes). However, our rigorous benchmarking (using a strictly split dataset of 107 unseen targets) reveals that the model's true generalization capacity is bounded at **Rp ≈ 0.40 - 0.43**.
+In the original paper, ProAffinity reported an exceptionally high Pearson correlation of **Rp = 0.811** on the SKEMPI subset (166 complexes). However, our rigorous benchmarking (using a strictly split dataset of 107 unseen targets) reveals that the model's true generalization capacity is bounded.
 
 **Why the huge discrepancy? (Data Leakage via Homology Overlap):**
 
@@ -141,8 +141,9 @@ Our benchmark corrects this over-optimistic estimation by employing a **strict, 
 
 #### i. Procedures
 
-- Duplicate the `PPIdataindex.txt` generated in ProAffinity, then run `I. pdbs.ipynb` and `II. merge.ipynb` in order. (You might need to change the route in `I. pdbs.ipynb` targeting `MCGLPPI_RawData/`) 
-- 
+- Duplicate the `PPIdataindex.txt` generated in ProAffinity, then run `I. pdbs.ipynb` and `II. merge.ipynb` in order. (You might need to change the route in `I. pdbs.ipynb` targeting `MCGLPPI_RawData/`)
+
+- Run `train_final.py` 
 
 #### ii. Model Optimization & Bottleneck
 

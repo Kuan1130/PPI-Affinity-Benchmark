@@ -6,7 +6,9 @@ import pickle
 import os
 import numpy as np
 from torch_geometric.data import Data
+from torch_geometric.utils import remove_isolated_nodes
 from tqdm import tqdm  
+
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -116,7 +118,19 @@ for pdb in tqdm(filenames, desc="Constructing Individual Graphs"):
         print(f"\n{pdb} Error: {e}")
         continue
 
-    data = Data(x=x, edge_index=edge_index, edge_attr=edge_feature)
+    num_nodes = x.size(0)
+    
+    # Renumber edge_index, and send node_mask back
+    clean_edge_index, clean_edge_attr, node_mask = remove_isolated_nodes(
+        edge_index=edge_index, 
+        edge_attr=edge_feature, 
+        num_nodes=num_nodes
+    )
+    
+    # remove useless features
+    clean_x = x[node_mask]
+    
+    data = Data(x=clean_x, edge_index=clean_edge_index, edge_attr=clean_edge_attr)
     save_path = 'data/graph/individual_graph/' + pdb
 
     with open(save_path, 'wb') as f_save:

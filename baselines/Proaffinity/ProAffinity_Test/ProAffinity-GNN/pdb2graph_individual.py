@@ -204,7 +204,7 @@ def get_fasta_seq(pdb, directory):
     if pdb in mole2file:
         with open(directory + pdb + '_1.fasta', 'r') as f1:
             lines = f1.readlines()
-            fasta_1 = lines[1].strip()
+            fasta_1 = "".join([line.strip() for line in lines[1:]]) # orginal: fasta_1 = lines[1].strip()
             chain_1 = lines[0].split('|')[1]
             chain_1_list = chain_1.split(',')
             for i, chain in enumerate(chain_1_list):
@@ -215,7 +215,7 @@ def get_fasta_seq(pdb, directory):
                      chain_1_list[i] = chain[-1]
         with open(directory + pdb + '_2.fasta', 'r') as f2:
             lines = f2.readlines()
-            fasta_2 = lines[1].strip()
+            fasta_2 = "".join([line.strip() for line in lines[1:]]) # original: fasta_2 = lines[1].strip()
             chain_2 = lines[0].split('|')[1]
             chain_2_list = chain_2.split(',')
             for i, chain in enumerate(chain_2_list):

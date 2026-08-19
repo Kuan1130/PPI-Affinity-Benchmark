@@ -6,6 +6,7 @@ import pickle
 import os
 import numpy as np
 from torch_geometric.data import Data
+from torch_geometric.utils import remove_isolated_nodes
 from tqdm import tqdm 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -39,7 +40,6 @@ def read_y(filename):
             y_dict.update({pdb:y})
     return y_dict
 
-# 2. 修復作者的低級 Bug：補上 'others'
 atom_pair = ['A_A', 'A_C', 'A_OA', 'A_N', 'A_NA', 'A_SA', 'A_HD', 
             'C_C', 'C_OA', 'C_N', 'C_NA', 'C_SA', 'C_HD',
             'OA_OA', 'OA_N', 'OA_NA', 'OA_SA', 'OA_HD',
@@ -130,8 +130,20 @@ for pdb in tqdm(filenames, desc="Constructing Graphs"):
         print(f"\n{pdb} 發生錯誤: {e}")
         continue
 
-    data = Data(x=x, edge_index=edge_index, edge_attr=edge_feature, y=y_dict[pdb.split('.')[0]])
-    save_path = 'data/graph/inter_graph/' + pdb
+    num_nodes = x.size(0)
+    
+    # Renumber edge_index, and send node_mask back
+    clean_edge_index, clean_edge_attr, node_mask = remove_isolated_nodes(
+        edge_index=edge_index, 
+        edge_attr=edge_feature, 
+        num_nodes=num_nodes
+    )
+    
+    # remove useless features
+    clean_x = x[node_mask]
+    
+    data = Data(x=clean_x, edge_index=clean_edge_index, edge_attr=clean_edge_attr, y=y_dict[pdb.split('.')[0]])
+    save_path = 'data/graph/inter_graph/' + pdb  
 
     with open(save_path, 'wb') as f_save:
         pickle.dump(data, f_save)

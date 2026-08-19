@@ -11,7 +11,7 @@ from scipy.stats import pearsonr, spearmanr
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from tqdm import tqdm
 
-def load_strict_dataset(csv_path, graph_dir, batch_size=16):
+def load_strict_dataset(csv_path, graph_dir, batch_size=64): 
     df = pd.read_csv(csv_path)
     inter_list, intra1_list, intra2_list = [], [], []
     inter_dir = os.path.join(graph_dir, 'inter_graph')
@@ -40,7 +40,6 @@ def load_strict_dataset(csv_path, graph_dir, batch_size=16):
             intra1_list.append(g_intra1)
             intra2_list.append(g_intra2)
 
-    # shuffle=False, confirm all files are aligned
     loader_inter = DataLoader(inter_list, batch_size=batch_size, shuffle=False)
     loader_intra1 = DataLoader(intra1_list, batch_size=batch_size, shuffle=False)
     loader_intra2 = DataLoader(intra2_list, batch_size=batch_size, shuffle=False)
@@ -63,14 +62,8 @@ class GraphNetwork(torch.nn.Module):
         self.graph2 = AttentiveFPModel(in_channels, hidden_channels, out_channels, edge_dim, num_layers, num_timesteps, dropout)
         self.graph3 = AttentiveFPModel(in_channels, hidden_channels, out_channels, edge_dim, num_layers, num_timesteps, dropout)
         
-        # Same as GearNet: 3 MLP + BatchNorm + 0.5 Dropout
-        self.fc1 = torch.nn.Linear(out_channels * 3, 128)
-        self.bn1 = torch.nn.BatchNorm1d(128)
-        self.fc2 = torch.nn.Linear(128, 64)
-        self.bn2 = torch.nn.BatchNorm1d(64)
-        self.fc3 = torch.nn.Linear(64, linear_out2)
-        
-        self.mlp_dropout = torch.nn.Dropout(p=0.5)
+        self.fc1 = torch.nn.Linear(out_channels * 3, linear_out1)
+        self.fc2 = torch.nn.Linear(linear_out1, linear_out2)
 
     def forward(self, inter_data, intra_data1, intra_data2):
         inter_graph = self.graph1(inter_data)
@@ -78,20 +71,8 @@ class GraphNetwork(torch.nn.Module):
         intra_graph2 = self.graph3(intra_data2)
         x = torch.cat([inter_graph, intra_graph1, intra_graph2], dim=1)
         
-        # i
-        x = self.fc1(x)
-        if x.size(0) > 1: x = self.bn1(x) 
-        x = F.relu(x)
-        x = self.mlp_dropout(x)
-        
-        # ii
+        x = F.relu(self.fc1(x))
         x = self.fc2(x)
-        if x.size(0) > 1: x = self.bn2(x)
-        x = F.relu(x)
-        x = self.mlp_dropout(x)
-        
-        # iii
-        x = self.fc3(x)
         return x
 
 def train(model, dl_inter, dl_intra1, dl_intra2, optimizer, criterion, device):
@@ -143,9 +124,9 @@ if __name__ == '__main__':
 
     seed_folders = ['seed_0', 'seed_1', 'seed_42', 'seed_142', 'seed_4242']
     
-    bs = 16
-    ep = 200
-    patience = 25
+    bs = 64
+    ep = 100
+    patience = 15
     
     final_results = {'Rp': [], 'Rs': [], 'RMSE': [], 'MAE': []}
 
@@ -171,16 +152,12 @@ if __name__ == '__main__':
             dropout=0.5, linear_out1=32, linear_out2=1
         ).to(device)
 
-        # AdamW, lr=1e-4, weight_decay=0
-        optimizer = torch.optim.AdamW(model.parameters(), lr=1e-4, weight_decay=0)
-        
-        # ReduceLROnPlateau, factor=0.6, patience=5
-        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.6, patience=5, verbose=True)
-        
-        # criterion: mse
+        # Adam + MSELoss
+        optimizer = torch.optim.Adam(model.parameters(), lr=0.0001, weight_decay=0.001)
+        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=10, verbose=True) # 改 mode='max', patience=10
         criterion = torch.nn.MSELoss()
 
-        best_loss = float('inf')
+        best_rp = -float('inf')
         patience_counter = 0
         train_losses, val_losses = [], []
 
@@ -195,10 +172,10 @@ if __name__ == '__main__':
             current_lr = optimizer.param_groups[0]['lr']
             print(f"Epoch {epoch+1:03d} | LR: {current_lr:.6f} | Train MSE: {t_loss:.4f} | Val MSE: {v_loss:.4f} | Val Rp: {v_rp:.3f}")
             
-            scheduler.step(v_loss)
+            scheduler.step(v_rp) 
             
-            if v_loss < best_loss:
-                best_loss = v_loss
+            if v_rp > best_rp:
+                best_rp = v_rp
                 patience_counter = 0
                 torch.save(model.state_dict(), model_save)
             else:

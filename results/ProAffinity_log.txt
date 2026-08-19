@@ -3,25 +3,25 @@ ProAffinity: 5-Seed Evaluation Logs
 ========================================
 
 [Run 1] - Seed 0
-Pearson: 0.4093 | Spearman: 0.4169 | RMSE: 1.6876 | MAE: 1.3289
+Pearson: 0.5669 | Spearman: 0.5105 | RMSE: 1.5703 | MAE: 1.2434
 
 [Run 2] - Seed 1
-Pearson: 0.4591 | Spearman: 0.4875 | RMSE: 1.7484 | MAE: 1.3073
+Pearson: 0.5500 | Spearman: 0.5242 | RMSE: 1.6794 | MAE: 1.2781
 
 [Run 3] - Seed 42
-Pearson: 0.3802 | Spearman: 0.4366 | RMSE: 1.9810 | MAE: 1.4754
+Pearson: 0.5783 | Spearman: 0.5541 | RMSE: 1.7768 | MAE: 1.3417
 
 [Run 4] - Seed 142
-Pearson: 0.3863 | Spearman: 0.4370 | RMSE: 1.6293 | MAE: 1.2415
+Pearson: 0.4255 | Spearman: 0.4210 | RMSE: 1.6433 | MAE: 1.2985
 
 [Run 5] - Seed 4242
-Pearson: 0.4923 | Spearman: 0.4978 | RMSE: 1.6330 | MAE: 1.2845
+Pearson: 0.5258 | Spearman: 0.4476 | RMSE: 1.9667 | MAE: 1.6079
 
 ========================================
 FINAL 5-SEED AVERAGE RESULTS (ProAffinity)
 ========================================
-Pearson (Rp):  0.4254 ± 0.0435
-Spearman (Rs): 0.4551 ± 0.0316
-RMSE:          1.7359 ± 0.1300
-MAE:           1.3275 ± 0.0794
+Pearson (Rp):  0.5293 ± 0.0548
+Spearman (Rs): 0.4915 ± 0.0495
+RMSE:          1.7273 ± 0.1369
+MAE:           1.3539 ± 0.1309
 ========================================

@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import subprocess
 import shutil
-import gc  
+import gc
 
 import torch
 import torch.nn as nn
@@ -148,7 +148,7 @@ def evaluate(model, loader, criterion):
     return epoch_loss / len(loader), output_all, affinity_all
 
 # ==========================================
-# Main 5-Seed Loop with RAM Cleansing
+# Main 5-Seed Loop with Perfect Model Tracking
 # ==========================================
 if __name__ == '__main__':
     seed_folders = ['seed_0', 'seed_1', 'seed_42', 'seed_142', 'seed_4242']
@@ -158,9 +158,9 @@ if __name__ == '__main__':
     os.makedirs(base_model_dir, exist_ok=True)
 
     for seed in seed_folders:
-        print("\n" + "="*20)
+        print("\n" + "="*50)
         print(f" Processing {seed} ...")
-        print("="*20)
+        print("="*50)
 
         temp_batch_dir = f"./batchs_{seed}"
         
@@ -176,7 +176,7 @@ if __name__ == '__main__':
 
         seed_save_dir = os.path.join(base_model_dir, seed)
         os.makedirs(seed_save_dir, exist_ok=True)
-        model_save_path = os.path.join(seed_save_dir, 'model_best.pth')
+        model_save_path = os.path.join(seed_save_dir, 'model_best_weights.pth')
         log_file = open(os.path.join(seed_save_dir, 'training_log.txt'), 'w')
 
         print(f"\n [2/3] Loading Data into High-Speed RAM for {seed}...")
@@ -198,7 +198,7 @@ if __name__ == '__main__':
         optimizer = optim.Adam(model.parameters(), lr=9e-4, betas=(0.9, 0.98), eps=1e-09, weight_decay=2e-5)
         scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=1, gamma=0.93)
 
-        best_valid_loss = float('inf')
+        best_valid_r = -float('inf') 
         train_losses, val_losses = [], []
 
         print(f"\n Start training {seed}...")
@@ -206,23 +206,32 @@ if __name__ == '__main__':
             t_loss = train(model, train_loader, optimizer, criterion)
             v_loss, val_preds, val_trues = evaluate(model, val_loader, criterion)
             
-            loss_all_val = criterion(val_preds, val_trues).item()
-            r_val = torch.corrcoef(torch.stack((val_preds, val_trues)))[0, 1].item()
+            val_preds_np = val_preds.cpu().numpy()
+            val_trues_np = val_trues.cpu().numpy()
+            try:
+                r_val, _ = pearsonr(val_trues_np, val_preds_np)
+            except:
+                r_val = 0.0
             
             scheduler.step()
             train_losses.append(t_loss)
             val_losses.append(v_loss)
 
             current_lr = optimizer.param_groups[-1]['lr']
-            print(f"Epoch {epoch:03d} | LR: {current_lr:.6f} | Train L1: {t_loss:.4f} | Val L1: {v_loss:.4f} | Val R: {r_val:.4f}")
-            print(f"Epoch {epoch:03d} | LR: {current_lr:.6f} | Train L1: {t_loss:.4f} | Val L1: {v_loss:.4f} | Val R: {r_val:.4f}", file=log_file)
+            log_str = f"Epoch {epoch:03d} | LR: {current_lr:.6f} | Train L1: {t_loss:.4f} | Val L1: {v_loss:.4f} | Val R: {r_val:.4f}"
+            print(log_str)
+            print(log_str, file=log_file)
 
-            if loss_all_val < best_valid_loss:
-                best_valid_loss = loss_all_val
-                torch.save(model, model_save_path)
+            if r_val > best_valid_r:
+                best_valid_r = r_val
+                torch.save(model.state_dict(), model_save_path)
 
-        print(f"\n Loading the best model for {seed} Test...")
-        best_model = torch.load(model_save_path)
+        print(f"\nLoading the BEST model (by Val Rp) for {seed} Test...")
+        
+        best_model = model_final.Transformer(config).to(device)
+        best_model.load_state_dict(torch.load(model_save_path))
+        best_model.eval()
+
         _, te_output, te_affinity = evaluate(best_model, test_loader, criterion)
 
         all_preds = te_output.cpu().numpy()
@@ -257,30 +266,27 @@ if __name__ == '__main__':
         plt.savefig(os.path.join(seed_save_dir, f'loss_curve_{seed}.png'))
         plt.close('all')
         
-        print(f"\n [3/3] Performing Deep Clean for {seed}...")
-        
+        print(f"\n[3/3] Performing Deep Clean for {seed}...")
         shutil.rmtree(temp_batch_dir, ignore_errors=True)
-        
         del train_data_dict, val_data_dict, test_data_dict
         del train_loader, val_loader, test_loader
         del model, best_model, optimizer, scheduler
-        
         gc.collect()
         torch.cuda.empty_cache()
-        print(" Memory & Disk successfully flushed. Ready for next seed.")
+        print("Memory & Disk successfully flushed. Ready for next seed.")
 
     # ==========================================
     # Final 5-Seed Average Report
     # ==========================================
     report_text = (
-        "\n" + "="*20 + "\n"
+        "\n" + "="*50 + "\n"
         " FINAL 5-SEED AVERAGE RESULTS (Graphomer)\n"
-        + "="*20 + "\n"
+        + "="*50 + "\n"
         f"Pearson (Rp):  {np.mean(final_results['Rp']):.4f} ± {np.std(final_results['Rp']):.4f}\n"
         f"Spearman (Rs): {np.mean(final_results['Rs']):.4f} ± {np.std(final_results['Rs']):.4f}\n"
         f"RMSE:          {np.mean(final_results['RMSE']):.4f} ± {np.std(final_results['RMSE']):.4f}\n"
         f"MAE:           {np.mean(final_results['MAE']):.4f} ± {np.std(final_results['MAE']):.4f}\n"
-        + "="*20
+        + "="*50
     )
     print(report_text)
     

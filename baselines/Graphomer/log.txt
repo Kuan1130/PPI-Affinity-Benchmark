@@ -3,25 +3,25 @@ Graphomer: 5-Seed Evaluation Logs
 ========================================
 
 [Run 1] - Seed 0
-Pearson: 0.5124 | Spearman: 0.5180 | RMSE: 1.5354 | MAE: 1.1732
+Pearson: 0.5227 | Spearman: 0.5224 | RMSE: 1.5805 | MAE: 1.2402
 
 [Run 2] - Seed 1
-Pearson: 0.5916 | Spearman: 0.5569 | RMSE: 1.5141 | MAE: 1.1819
+Pearson: 0.5940 | Spearman: 0.5607 | RMSE: 1.5080 | MAE: 1.1512
 
 [Run 3] - Seed 42
-Pearson: 0.6276 | Spearman: 0.6087 | RMSE: 1.5744 | MAE: 1.1318
+Pearson: 0.6215 | Spearman: 0.6090 | RMSE: 1.5883 | MAE: 1.1469
 
 [Run 4] - Seed 142
-Pearson: 0.4222 | Spearman: 0.4619 | RMSE: 1.5027 | MAE: 1.1172
+Pearson: 0.4590 | Spearman: 0.4983 | RMSE: 1.5205 | MAE: 1.1870
 
 [Run 5] - Seed 4242
-Pearson: 0.5156 | Spearman: 0.5221 | RMSE: 1.6337 | MAE: 1.3269
+Pearson: 0.5008 | Spearman: 0.5110 | RMSE: 1.6433 | MAE: 1.3287
 
 ========================================
 FINAL 5-SEED AVERAGE RESULTS (Graphomer)
 ========================================
-Pearson (Rp):  0.5339 ± 0.0713
-Spearman (Rs): 0.5335 ± 0.0483
-RMSE:          1.5520 ± 0.0476
-MAE:           1.1862 ± 0.0744
+Pearson (Rp):  0.5396 ± 0.0599
+Spearman (Rs): 0.5403 ± 0.0402
+RMSE:          1.5681 ± 0.0492
+MAE:           1.2108 ± 0.0678
 ========================================
