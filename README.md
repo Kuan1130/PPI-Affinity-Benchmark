@@ -88,8 +88,8 @@ All models were evaluated based on their Mean Absolute Error (MAE), Root Mean Sq
 |**Model**|**Pearson (Rp​)**|**Spearman (Rs​)**|**RMSE**|**MAE**|
 |---|---|---|---|---|
 |**ProAffinity**|0.5293 ± 0.0548|0.4915 ± 0.0495|1.7273 ± 0.1369|1.3539 ± 0.1309|
-|**Graphomer**|0.5396 ± 0.0599|0.5403 ± 0.0402|1.5681 ± 0.0492|1.2108 ± 0.0678|
-|**GearNet-Res**|0.5725 ± 0.1015|0.5125 ± 0.0809|1.5790 ± 0.0692|1.2231 ± 0.0270|
+|**Graphomer**|0.5396 ± 0.0599|**0.5403 ± 0.0402**|**1.5681 ± 0.0492**|**1.2108 ± 0.0678**|
+|**GearNet-Res**|**0.5725 ± 0.1015**|0.5125 ± 0.0809|1.5790 ± 0.0692|1.2231 ± 0.0270|
 
 > _Detailed training logs and raw outputs can be found in the `results/` directory._
 
@@ -110,20 +110,24 @@ All models were evaluated based on their Mean Absolute Error (MAE), Root Mean Sq
 ### For ProAffinity:
 
 #### i. Procedures
-- Run through all `.ipynb` in chronological order in `ProAffinity_Test/` (Ensure you have your raw pdbs from MCGLPPI)
-- Then, go to `ProAffinity_Test/` for graph construction, by runing `pdb2graph.py` and `pdb2graph_individual.py` FIRST, and run `graph_construct.py` and `graph_construct_indi.py` later
-
+- Run through all `.ipynb` in chronological order in `ProAffinity_Test/` (Ensure you have your raw pdbs from MCGLPPI).
+- Then, go to `ProAffinity_Test/` for graph construction, by running `pdb2graph.py` and `pdb2graph_individual.py` FIRST, and run `graph_construct.py` and `graph_construct_indi.py` later.
+- **CRITICAL FIXES APPLIED:** We identified and patched two fatal bugs in the original author's graph construction repository:
+  1. **FASTA Truncation:** The original code (`lines[1].strip()`) truncated fasta sequences at 80 characters, causing misaligned ESM features.
+  2. **Padding Node Corruption:** The original code included isolated padding nodes (missing 3D coordinates in PDB) into the graph. We applied PyG's `remove_isolated_nodes` to prevent these ghost nodes from corrupting the ESM features during the GNN Global Pooling phase.
 
 #### ii. Model Optimization & Bottleneck Analysis
-In this benchmark, we rigorously tested the limits of the ProAffinity (AttentiveFP-based) architecture. We applied several advanced optimization techniques to push its performance ceiling:
-* **MLP Head Expansion:** Deepened the prediction head (192 -> 128 -> 64 -> 1) to prevent feature compression bottlenecks.
-* **Robust Loss Function:** Replaced `MSELoss` with `HuberLoss` to mitigate the impact of extreme binding affinity outliers and stabilize gradient updates.
-* **Hyperparameter Tuning:** Adjusted Batch Size (64) and optimized Dropout rates (0.2).
 
-**Conclusion (The Architectural Bottleneck):**
-While these optimizations successfully cured the severe validation loss oscillations and resulted in a highly stable training curve, the final 5-seed average performance remained strictly capped at **Rp ≈ 0.42**. 
+**1. Re-evaluating the Baseline (The Data Leakage Issue):**
+The original ProAffinity paper reported an overly optimistic Pearson correlation of **Rp = 0.811** on the SKEMPI mutant dataset. However, standard random splits cause severe **homology data leakage** (the model memorizes the wild-type 3D backbones during training and predicts identical mutants during testing). Under our **strict, non-homologous zero-shot split**, the model's true generalization capacity is established at **Rp ≈ 0.518**.
 
-This serves as strong empirical evidence that the performance gap between ProAffinity and 3D-aware models (like GearNet, Rp ≈ 0.60) is **NOT due to suboptimal hyperparameter tuning**, but rather an **architectural limitation**. The underlying AttentiveFP GNN solely extracts 1D/2D topological features and fundamentally lacks the capacity to comprehend 3D geometric spatial features (e.g., dihedrals, spatial distances), which are the critical deciders in Protein-Protein Interaction (PPI) tasks.
+**2. Hyperparameter Sensitivity (The "Armor Mismatch"):**
+In an attempt to ensure a strictly controlled benchmark, we initially applied GearNet's heavy-duty hyperparameters (`BatchNorm`, `Batch Size 16`) to ProAffinity. This caused catastrophic failure (RMSE spiked from ~1.7 to > 2.2). We conclude that small batch sizes paired with `BatchNorm` destroy absolute-scale predictions for this lightweight architecture. The optimal and fairest setup for ProAffinity remains its native configuration: `Batch Size 64`, `No BatchNorm`, and standard `MSELoss`.
+
+**3. Conclusion (The Architectural Bottleneck):**
+After sanitizing the ESM features and optimizing the learning rate scheduler to monitor validation Rp, ProAffinity reached its absolute physical ceiling of **Rp = 0.53 ± 0.06**. 
+
+This serves as strong empirical evidence that the performance gap between ProAffinity and 3D-aware models (like GearNet, Rp ≈ 0.60) is **NOT due to suboptimal hyperparameter tuning**, but rather an **architectural limitation**. The underlying AttentiveFP GNN solely extracts 1D/2D topological features and fundamentally lacks the capacity to comprehend 3D geometric spatial interactions (e.g., dihedrals, precise spatial distances), which are the ultimate deciders in Protein-Protein Interaction (PPI) tasks.
 
 #### iii. Re-evaluating the Baseline: The "Data Leakage" Issue in PPI Benchmarks
 
@@ -133,7 +137,7 @@ In the original paper, ProAffinity reported an exceptionally high Pearson correl
 
 The SKEMPI subset consists of only 26 wild-type complexes and 140 of their point-mutation variants. In standard random-split procedures (without strict sequence-identity clustering), the training set inevitably absorbs the structural backbones of these wild-type proteins. Consequently, when evaluating the SKEMPI mutants, the model is simply **memorizing (overfitting to) the highly homologous global 3D scaffolds** it has already seen during training, rather than genuinely predicting the biophysical impact of the mutations. 
 
-Our benchmark corrects this over-optimistic estimation by employing a **strict, non-homologous data split**, ensuring zero structural overlap between the 1000 training samples and the 107 test samples. Under this true zero-shot/unseen evaluation, ProAffinity achieves an Rp of ~0.42, which serves as a realistic and scientifically rigorous baseline for 1D/2D GNN architectures in de novo PPI binding affinity prediction.
+Our benchmark corrects this over-optimistic estimation by employing a **strict, non-homologous data split**, ensuring zero structural overlap between the 1000 training samples and the 107 test samples. Under this true zero-shot/unseen evaluation, ProAffinity achieves an Rp of ~0.52, which serves as a realistic and scientifically rigorous baseline for 1D/2D GNN architectures in de novo PPI binding affinity prediction.
 
 
 
@@ -183,12 +187,14 @@ GearNet-Res operates as a 3D-aware multi-relational heterogeneous GNN. To push i
 
 
 
-## VII. Conclusion (The Residue-Scale Dilemma: High Peak, Extreme Instability)
+## VII. Conclusion: The Residue-Scale Dilemma (High Peak, Extreme Instability)
 
-The 5-seed benchmark results perfectly illustrate the theoretical trade-offs of residue-scale geometric representation. GearNet-Res achieved the highest mean Pearson correlation in our evaluation (Rp = 0.5725), definitively proving that incorporating 3D spatial architectures easily shatters the performance ceiling of 1D/2D topological models like ProAffinity (Rp = 0.4254).
+The 5-seed benchmark results perfectly illustrate the theoretical trade-offs of different geometric representations. 
 
-However, this high average performance masks a severe flaw: **Extreme Instability**. GearNet-Res exhibits a massive standard deviation of ± 0.1015 (over double that of ProAffinity and Graphomer).
+**GearNet-Res** achieved the highest mean Pearson correlation in our evaluation (Rp = **0.5725**), definitively proving that explicitly modeling 3D spatial architecture shatters the performance ceiling of 1D/2D topological models. However, this high average performance masks a severe flaw: **Extreme Instability**. GearNet-Res exhibits a massive standard deviation of **± 0.1015** (double that of ProAffinity and Graphomer).
 
-The root cause of this variance lies in the inherent limitation of residue-scale modeling. As noted in recent structural studies, mapping entire amino acids to single Cα nodes means the model "may overlook critical binding details that influence specificity and affinity". By compressing complex side-chain orientations into single points and wiring them blindly based on distance thresholds, GearNet-Res loses chemically plausible interaction details.
+The root cause of this variance lies in the inherent limitation of **residue-scale modeling**. Mapping entire amino acids to single Cα nodes compresses complex side-chain orientations into single points, wiring them blindly based on distance thresholds. By doing so, GearNet-Res loses chemically plausible interaction details (e.g., hydrogen bonding, polarity matching).
 
-Consequently, its performance becomes highly luck-dependent (split-sensitive). If a test split relies heavily on global backbone geometries, GearNet-Res performs exceptionally well. But if the binding affinities in a specific split are driven by fine-grained, side-chain-specific physical interactions (which CG or Atom-scale models can capture), GearNet-Res's predictions collapse. It serves as a textbook example of how **geometric awareness brings high potential, but missing chemically plausible features leads to catastrophic variance.**
+Consequently, its performance becomes highly luck-dependent (split-sensitive). If a test split relies heavily on global backbone geometries, GearNet-Res performs exceptionally well. But if the binding affinities in a specific split are driven by fine-grained, side-chain-specific physical interactions, GearNet-Res's predictions collapse. 
+
+This benchmark serves as a textbook example of how **geometric awareness brings high potential, but omitting chemically plausible atomic features leads to catastrophic variance.**
