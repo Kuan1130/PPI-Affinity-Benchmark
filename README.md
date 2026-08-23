@@ -1,8 +1,8 @@
 # PPI Affinity Prediction Benchmark on MCGLPPI
 
-This repository provides a standardized benchmarking framework for Protein-Protein Interaction (PPI) affinity prediction. We evaluate and compare three sota deep learning models under a strict, unified evaluation protocol using the **MCGLPPI** dataset (1,270 PPI complexes).
+This repository provides a standardized benchmarking framework for protein-protein interaction (PPI) affinity prediction. We evaluate and compare three deep-learning baselines under a unified evaluation protocol using the **MCGLPPI** dataset (1,270 PPI complexes).
 
-To ensure robustness and statistical significance, all models are evaluated using a **5-Seed Cross-Validation** approach (Train/Val/Test = 8:1:1).
+To assess sensitivity to data partitioning and training randomness, all models are evaluated on **five seeded train/validation/test splits** (nominally 8:1:1). This is a repeated holdout evaluation, not k-fold cross-validation. The exact split sizes and any grouping rule used to prevent homologous overlap should be documented in the split-generation script.
 
 ---
 
@@ -38,7 +38,7 @@ Please navigate to the respective folders in `baselines/` and follow the specifi
 conda create -n proaffinity python=3.8
 conda activate proaffinity
 # Install base PyTorch
-pip install torch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0 --index-url [https://download.pytorch.org/whl/cu121](https://download.pytorch.org/whl/cu121)
+pip install torch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0 --index-url https://download.pytorch.org/whl/cu121
 # Install PyG
 pip install torch_geometric==2.3.0
 # Install the rest of the dependencies
@@ -52,9 +52,9 @@ pip install -r requirements.txt
 conda create -n graphomer python=3.9
 conda activate graphomer
 # Install base PyTorch
-pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url [https://download.pytorch.org/whl/cu121](https://download.pytorch.org/whl/cu121)
+pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu121
 # Install specific torch-scatter wheel (Crucial!)
-wget [https://data.pyg.org/whl/torch-2.1.0%2Bcu121/torch_scatter-2.1.2%2Bpt21cu121-cp39-cp39-linux_x86_64.whl](https://data.pyg.org/whl/torch-2.1.0%2Bcu121/torch_scatter-2.1.2%2Bpt21cu121-cp39-cp39-linux_x86_64.whl)
+wget https://data.pyg.org/whl/torch-2.1.0%2Bcu121/torch_scatter-2.1.2%2Bpt21cu121-cp39-cp39-linux_x86_64.whl
 pip install torch_scatter-2.1.2+pt21cu121-cp39-cp39-linux_x86_64.whl
 # Install the rest of the dependencies
 cd baselines/Graphomer
@@ -72,7 +72,7 @@ conda activate gearnet
 # Install base PyTorch (Modify CUDA version according to your machine)
 conda install pytorch==1.8.1 torchvision==0.9.1 torchaudio==0.8.1 cudatoolkit=11.1 -c pytorch -c conda-forge
 # Install PyG dependencies manually (Crucial!)
-pip install torch-scatter torch-cluster -f [https://data.pyg.org/whl/torch-1.8.1+cu111.html](https://data.pyg.org/whl/torch-1.8.1+cu111.html)
+pip install torch-scatter torch-cluster -f https://data.pyg.org/whl/torch-1.8.1+cu111.html
 # Install the rest of the dependencies
 cd baselines/GearNet-Res
 pip install -r requirements.txt
@@ -112,34 +112,22 @@ All models were evaluated based on their Mean Absolute Error (MAE), Root Mean Sq
 #### i. Procedures
 - Run through all `.ipynb` in chronological order in `ProAffinity_Test/` (Ensure you have your raw pdbs from MCGLPPI).
 - Then, go to `ProAffinity_Test/` for graph construction, by running `pdb2graph.py` and `pdb2graph_individual.py` FIRST, and run `graph_construct.py` and `graph_construct_indi.py` later.
-- **CRITICAL FIXES APPLIED:** We identified and patched two fatal bugs in the original author's graph construction repository:
+- **Preprocessing fixes applied:** We identified and patched two issues in the original graph-construction code:
   1. **FASTA Truncation:** The original code (`lines[1].strip()`) truncated fasta sequences at 80 characters, causing misaligned ESM features.
   2. **Padding Node Corruption:** The original code included isolated padding nodes (missing 3D coordinates in PDB) into the graph. We applied PyG's `remove_isolated_nodes` to prevent these ghost nodes from corrupting the ESM features during the GNN Global Pooling phase.
 
 #### ii. Model Optimization & Bottleneck Analysis
 
-**1. Re-evaluating the Baseline (The Data Leakage Issue):**
-The original ProAffinity paper reported an overly optimistic Pearson correlation of **Rp = 0.811** on the SKEMPI mutant dataset. However, standard random splits cause severe **homology data leakage** (the model memorizes the wild-type 3D backbones during training and predicts identical mutants during testing). Under our **strict, non-homologous zero-shot split**, the model's true generalization capacity is established at **Rp ≈ 0.518**.
+**1. Re-evaluating the baseline (potential homology leakage):**
+The original ProAffinity paper reported **$R_p$ = 0.811** on a SKEMPI mutant subset. Random example-level splitting can place variants of the same wild-type complex, or closely homologous proteins, across training and test sets and may therefore inflate performance. In this benchmark, ProAffinity obtains **$R_p$ = 0.5293 ± 0.0548** across the five supplied splits. A zero-shot or non-homologous claim should be made only after the clustering criterion is documented and the absence of cluster overlap is verified.
 
 **2. Hyperparameter Sensitivity (The "Armor Mismatch"):**
-In an attempt to ensure a strictly controlled benchmark, we initially applied GearNet's heavy-duty hyperparameters (`BatchNorm`, `Batch Size 16`) to ProAffinity. This caused catastrophic failure (RMSE spiked from ~1.7 to > 2.2). We conclude that small batch sizes paired with `BatchNorm` destroy absolute-scale predictions for this lightweight architecture. The optimal and fairest setup for ProAffinity remains its native configuration: `Batch Size 64`, `No BatchNorm`, and standard `MSELoss`.
+We initially applied GearNet-style hyperparameters (`BatchNorm`, `Batch Size 16`) to ProAffinity. This degraded performance in our runs (RMSE increased from approximately 1.7 to above 2.2), suggesting sensitivity to batch size and normalization. We therefore retained the model's native setup: `Batch Size 64`, no `BatchNorm`, and standard `MSELoss`.
 
 **3. Conclusion (The Architectural Bottleneck):**
-After sanitizing the ESM features and optimizing the learning rate scheduler to monitor validation Rp, ProAffinity reached its absolute physical ceiling of **Rp = 0.53 ± 0.06**. 
+After correcting the ESM preprocessing and configuring the learning-rate scheduler to monitor validation $R_p$, ProAffinity reached **$R_p$ = 0.5293 ± 0.0548** under the current protocol.
 
-This serves as strong empirical evidence that the performance gap between ProAffinity and 3D-aware models (like GearNet, Rp ≈ 0.60) is **NOT due to suboptimal hyperparameter tuning**, but rather an **architectural limitation**. The underlying AttentiveFP GNN solely extracts 1D/2D topological features and fundamentally lacks the capacity to comprehend 3D geometric spatial interactions (e.g., dihedrals, precise spatial distances), which are the ultimate deciders in Protein-Protein Interaction (PPI) tasks.
-
-#### iii. Re-evaluating the Baseline: The "Data Leakage" Issue in PPI Benchmarks
-
-In the original paper, ProAffinity reported an exceptionally high Pearson correlation of **Rp = 0.811** on the SKEMPI subset (166 complexes). However, our rigorous benchmarking (using a strictly split dataset of 107 unseen targets) reveals that the model's true generalization capacity is bounded.
-
-**Why the huge discrepancy? (Data Leakage via Homology Overlap):**
-
-The SKEMPI subset consists of only 26 wild-type complexes and 140 of their point-mutation variants. In standard random-split procedures (without strict sequence-identity clustering), the training set inevitably absorbs the structural backbones of these wild-type proteins. Consequently, when evaluating the SKEMPI mutants, the model is simply **memorizing (overfitting to) the highly homologous global 3D scaffolds** it has already seen during training, rather than genuinely predicting the biophysical impact of the mutations. 
-
-Our benchmark corrects this over-optimistic estimation by employing a **strict, non-homologous data split**, ensuring zero structural overlap between the 1000 training samples and the 107 test samples. Under this true zero-shot/unseen evaluation, ProAffinity achieves an Rp of ~0.52, which serves as a realistic and scientifically rigorous baseline for 1D/2D GNN architectures in de novo PPI binding affinity prediction.
-
-
+The current results do not isolate architecture from tuning as the cause of the performance differences. They instead motivate controlled ablations of geometric inputs, model capacity, and optimization settings.
 
 ### For Graphomer:
 
@@ -151,21 +139,21 @@ Our benchmark corrects this over-optimistic estimation by employing a **strict, 
 
 #### ii. Model Optimization & Bottleneck
 
-In contrast to ProAffinity's lightweight GNN, Graphomer utilizes a heavy Transformer-based architecture. Our optimization efforts here focused on overcoming severe computational and memory bottlenecks (I/O & VRAM) caused by the $O(N^2)$ complexity of the self-attention mechanism over long protein sequences (`pro_len = 2000`):
+In contrast to ProAffinity's lightweight GNN, Graphomer uses a Transformer-based architecture. Our optimization efforts focused on computational and memory bottlenecks (I/O and VRAM) caused by the $O(N^2)$ complexity of self-attention over long protein sequences (`pro_len = 2000`):
 
 * **Data Pipeline & RAM Bottleneck Resolution:** Prevented catastrophic system SWAP lockups by abandoning full-dataset RAM loading. Implemented a strict memory management protocol (using Python `gc.collect()` and dynamic disk deletion) to isolate the memory footprint of each seed.
 * **VRAM Tuning & Dimension Alignment:** Scaled down the Batch Size to 8 to fit within 24GB VRAM limits, and corrected the internal feature embedding projection (`d_embed = 64`) to perfectly align with the pre-processed ESM sequence features and 3D structural coordinates.
-* **Architectural Enhancement (Spatial & Edge Encoding):** Graphormer extends the standard self-attention mechanism by incorporating graph-specific structural information (shortest path distances) and edge features as learned biases. This additive formulation ensures that both feature similarity and structural proximity are considered in the attention computation.
+* **Architectural Enhancement (Spatial & Edge Encoding):** Graphomer extends the standard self-attention mechanism by incorporating graph-specific structural information (shortest path distances) and edge features as learned biases. This additive formulation ensures that both feature similarity and structural proximity are considered in the attention computation.
 
 
 
 #### iii. Analysis
 
-As established in our ProAffinity analysis, classical Message Passing Neural Networks (MPNNs) face significant limitations, such as the 1-WL test limit for distinguishing non-isomorphic structures and the "oversmoothing" problem. The ProAffinity model's performance was strictly capped at $R_p \approx 0.42$ under our rigorous zero-shot, non-homologous split.
+Classical message-passing neural networks can be affected by limited expressivity and oversmoothing. Under the current five-split protocol, ProAffinity obtains a mean $R_p$ of **0.5293 ± 0.0548**.
 
-Graphomer explicitly overcomes these limitations because its self-attention mechanism has a global receptive field, allowing each node (residue) to attend to every other node while injecting 3D spatial distances directly into the attention score.
+Graphomer partially addresses the locality limitation of message-passing GNNs through a global receptive field, allowing each node (residue) to attend to other nodes while incorporating structural biases into the attention score.
 
-Evaluated on the exact same strict, non-homologous 107-target test set, Graphomer achieves a significantly higher performance ($R_p \approx 0.53 \sim 0.61$). This provides definitive empirical evidence that **incorporating explicit 3D spatial priors (distance matrices and edge encodings) into a Transformer architecture is critical**. It bridges the gap that 1D/2D topological GNNs cannot cross, enabling the model to genuinely comprehend the biophysical and geometric constraints of Protein-Protein Interactions (PPI) rather than merely memorizing homologous scaffolds.
+Across the five splits, Graphomer obtains a mean $R_p$ of **0.5396 ± 0.0599**, compared with **0.5293 ± 0.0548** for ProAffinity. The overlap in variability means that these results alone do not establish a statistically significant architectural advantage. They are consistent with the hypothesis that structural biases may help on some subsets, which should be tested using paired per-split results and confidence intervals or an appropriate paired test.
 
 
 
@@ -189,12 +177,12 @@ GearNet-Res operates as a 3D-aware multi-relational heterogeneous GNN. To push i
 
 ## VII. Conclusion: The Residue-Scale Dilemma (High Peak, Extreme Instability)
 
-The 5-seed benchmark results perfectly illustrate the theoretical trade-offs of different geometric representations. 
+The five-split benchmark suggests possible trade-offs among the evaluated representations.
 
-**GearNet-Res** achieved the highest mean Pearson correlation in our evaluation (Rp = **0.5725**), definitively proving that explicitly modeling 3D spatial architecture shatters the performance ceiling of 1D/2D topological models. However, this high average performance masks a severe flaw: **Extreme Instability**. GearNet-Res exhibits a massive standard deviation of **± 0.1015** (double that of ProAffinity and Graphomer).
+**GearNet-Res** achieved the highest mean Pearson correlation in our evaluation ($R_p$ = **0.5725**), although its standard deviation (**± 0.1015**) was larger than those of ProAffinity and Graphomer. With only five splits, this should be described as higher split sensitivity rather than definitive evidence of instability or architectural superiority.
 
-The root cause of this variance lies in the inherent limitation of **residue-scale modeling**. Mapping entire amino acids to single Cα nodes compresses complex side-chain orientations into single points, wiring them blindly based on distance thresholds. By doing so, GearNet-Res loses chemically plausible interaction details (e.g., hydrogen bonding, polarity matching).
+One possible contributor is the information loss introduced by **residue-scale modeling**: mapping amino acids to coarse residue-level nodes may omit side-chain orientations and atom-level interaction details. Other contributors—including dataset composition, optimization variance, and hyperparameter sensitivity—have not yet been ruled out.
 
-Consequently, its performance becomes highly luck-dependent (split-sensitive). If a test split relies heavily on global backbone geometries, GearNet-Res performs exceptionally well. But if the binding affinities in a specific split are driven by fine-grained, side-chain-specific physical interactions, GearNet-Res's predictions collapse. 
+Per-split error analysis is needed to determine whether the observed variation is associated with interface composition, structural quality, protein-family distribution, or fine-grained side-chain interactions.
 
-This benchmark serves as a textbook example of how **geometric awareness brings high potential, but omitting chemically plausible atomic features leads to catastrophic variance.**
+Overall, the results motivate a more targeted analysis of when geometric representations help and whether atom-level chemical features can improve robustness.
