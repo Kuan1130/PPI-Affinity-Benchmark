@@ -185,8 +185,8 @@ def match_seq_with_fasta(seq, fasta):
 # fasta_list is a list of fasta sequence, [,]
 # chain_list is a list of chain list, each element in chain_list is a list of chains of corresponding fasta sequence [[a,b], [c,d]]
 
-path1 = 'data/FASTA/2mole/'
-path2 = 'data/FASTA/3mole/' 
+path1 = '../../../../data/mmseqs/fasta/'
+path2 = '../../../../data/mmseqs/fasta/' 
 mole2file = os.listdir(path1)
 mole3file = os.listdir(path2)
 
@@ -476,14 +476,26 @@ for pdb, prot_pair in zip(pdblist, chainlist):
         continue
     flag = 1
     
-    residuelistA = get_residue_list_from_file('data/pdbqt/' + pdb + '_atom_processed' + '.pdbqt', prot_pair[0])
-    residuelistB = get_residue_list_from_file('data/pdbqt/' + pdb + '_atom_processed' + '.pdbqt', prot_pair[1])
+    residuelistA = get_residue_list_from_file(
+        '../../../../data/local/pdbqt/' +
+        pdb + '_atom_processed.pdbqt',
+        prot_pair[0]
+    )
+
+    residuelistB = get_residue_list_from_file(
+        '../../../../data/local/pdbqt/' +
+        pdb + '_atom_processed.pdbqt',
+        prot_pair[1]
+    )
     if len(residuelistA) == 0 or len(residuelistB) == 0:
         print('no residue list')
         continue
 
     try:
-        fasta_list, chain_list = get_fasta_seq(str.upper(pdb), 'data/FASTA/mixed/')
+        fasta_list, chain_list = get_fasta_seq(
+            pdb.upper(),
+            '../../../../data/mmseqs/fasta/'
+        )
     except Exception as e:
         print(e)
         continue

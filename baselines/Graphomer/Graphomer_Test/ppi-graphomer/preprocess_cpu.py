@@ -534,8 +534,18 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--workers", '-n', default=3, type=int, help="The first number")
-    parser.add_argument("--save_dir", '-s', default="./data/preprocess/cpu/default/", type=str, help="Save directory")
-    parser.add_argument("--pdb_folder", '-p', default="./data/pdb/default/", type=str, help="pdb directory")
+    parser.add_argument(
+        "--save_dir", "-s",
+        default="./preprocess_cpu_data",
+        type=str,
+        help="Directory for CPU preprocessing shards",
+    )
+    parser.add_argument(
+        "--pdb_folder", "-p",
+        default="../../../../data/local/pdbs",
+        type=str,
+        help="Directory containing shared PDB files",
+    )
 
     # assign your pdbs here
     # pdb_folder = "./data_final/pdb/Accepted"

@@ -28,9 +28,24 @@ if __name__ == '__main__':
     # parser.add_argument("--save_dir", '-s', default="./data_final/preprocess/gpu/default/", type=str, help="Save directory")
     # parser.add_argument("--pdb_folder", '-p', default="./data_final/pdb/Accepted/", type=str, help="pdb directory")
 
-    parser.add_argument("--cpu_path", '-c', default="./data/preprocess/cpu/default/", type=str, help="cpu data path")
-    parser.add_argument("--gpu_path", '-g', default="./data/preprocess/gpu/default/", type=str, help="gpu data path")
-    parser.add_argument("--save_folder", '-s', default="./data/checked_data/default/", type=str, help="checked data path")
+    parser.add_argument(
+        "--cpu_path", "-c",
+        default="./preprocess_cpu_data",
+        type=str,
+        help="Directory containing CPU preprocessing shards",
+    )
+    parser.add_argument(
+        "--gpu_path", "-g",
+        default="./preprocess_gpu_data",
+        type=str,
+        help="Directory containing GPU preprocessing shards",
+    )
+    parser.add_argument(
+        "--save_folder", "-s",
+        default="./checked_data",
+        type=str,
+        help="Directory for validated CPU data",
+    )
 
     # assign your pdbs here
     # pdb_folder = "./data_final/pdb/Accepted"

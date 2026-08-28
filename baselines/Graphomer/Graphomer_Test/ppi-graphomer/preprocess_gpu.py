@@ -322,8 +322,18 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--workers", '-n', default=2, type=int, help="The first number")
-    parser.add_argument("--save_dir", '-s', default="./data/preprocess/gpu/default/", type=str, help="Save directory")
-    parser.add_argument("--pdb_folder", '-p', default="./data/pdb/default/", type=str, help="pdb directory")
+    parser.add_argument(
+        "--save_dir", "-s",
+        default="./preprocess_gpu_data",
+        type=str,
+        help="Directory for GPU preprocessing shards",
+    )
+    parser.add_argument(
+        "--pdb_folder", "-p",
+        default="../../../../data/local/pdbs",
+        type=str,
+        help="Directory containing shared PDB files",
+    )
     parser.add_argument("--single_process", '-m', default=False, type=bool, help="multiprocess or single")
 
 

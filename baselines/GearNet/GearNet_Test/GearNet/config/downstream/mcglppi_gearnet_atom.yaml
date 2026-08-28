@@ -1,0 +1,68 @@
+output_dir: /root/autodl-tmp/GearNetRes_Test/GearNet/output/atom_contact_v1/seed_0
+
+dataset:
+  class: MCGLPPI
+  lazy: False
+  pdb_dir: /root/autodl-tmp/GearNetRes_Test/pdbs/
+  train_csv: /root/autodl-tmp/GearNetRes_Test/GearNet/mmseqs_seeds_splits/seed_0/train_split.csv
+  val_csv: /root/autodl-tmp/GearNetRes_Test/GearNet/mmseqs_seeds_splits/seed_0/val_split.csv
+  test_csv: /root/autodl-tmp/GearNetRes_Test/GearNet/mmseqs_seeds_splits/seed_0/test_split.csv
+  transform:
+    class: ProteinView
+    view: atom
+
+task:
+  class: PropertyPrediction
+  task: proaffinity_label
+  criterion: mse
+  metric: ["pearsonr", "spearmanr", "rmse", "mae"]
+  num_mlp_layer: 3
+  mlp_batch_norm: False
+  mlp_dropout: 0.1
+  normalization: True
+
+  graph_construction_model:
+    class: GraphConstruction
+    node_layers:
+      - class: IdentityNode
+    edge_layers:
+      - class: SpatialEdge
+        radius: 5.0
+        min_distance: 0
+        max_num_neighbors: 32
+      - class: KNNEdge
+        k: 10
+        min_distance: 0
+    edge_feature: gearnet
+
+  model:
+    class: GearNet
+    input_dim: 67
+    hidden_dims: [512, 512, 512, 512, 512, 512]
+    num_relation: 2
+    batch_norm: True
+    concat_hidden: True
+    short_cut: True
+    readout: mean
+
+optimizer:
+  class: AdamW
+  lr: 1.0e-4
+  weight_decay: 0
+
+scheduler:
+  class: ReduceLROnPlateau
+  factor: 0.6
+  mode: max
+  patience: 5
+
+engine:
+  gpus: {{ gpus }}
+  batch_size: 2
+  log_interval: 10
+  num_worker: 4
+
+metric: pearsonr [proaffinity_label]
+
+train:
+  num_epoch: 200

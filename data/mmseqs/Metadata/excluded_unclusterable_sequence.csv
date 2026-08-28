@@ -1,0 +1,3 @@
+﻿pdb_code,binding_affinity,binding_free_energy,exclusion_reason
+3kv4,Kd=1uM,-8.18,partner 2 sequence is X (length 1)
+4ft4,Kd=0.5uM,-8.59,"partner 2 sequence is ATRX (length 4, contains X)"

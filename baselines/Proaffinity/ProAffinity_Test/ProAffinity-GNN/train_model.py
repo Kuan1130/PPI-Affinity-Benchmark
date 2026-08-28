@@ -118,8 +118,8 @@ if __name__ == '__main__':
     print(f"current device: {device}")
 
     # dir
-    graph_base_dir = '/root/autodl-tmp/5/ProAffinity_Test/ProAffinity-GNN/data/graph'
-    base_csv_dir = '/root/autodl-tmp/5/ProAffinity_Test/random_seeds_splits' 
+    graph_base_dir = 'data/graph'
+    base_csv_dir = '../../../../data/mmseqs_seeds_splits'
     base_model_dir = 'model'
 
     seed_folders = ['seed_0', 'seed_1', 'seed_42', 'seed_142', 'seed_4242']

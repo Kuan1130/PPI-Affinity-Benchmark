@@ -1,0 +1,292 @@
+nohup: ignoring input
+current device: cuda
+
+====================
+Running seed seed_0...
+====================
+
+ Loading Datasets for seed_0...
+/root/miniconda3/envs/proaffinity/lib/python3.8/site-packages/torch/optim/lr_scheduler.py:28: UserWarning: The verbose parameter is deprecated. Please use get_last_lr() to access the learning rate.
+  warnings.warn("The verbose parameter is deprecated. Please use get_last_lr() "
+
+ Start training seed_0...
+Epoch 001 | LR: 0.000100 | Train MSE: 20.9874 | Val MSE: 9.6548 | Val Rp: 0.149
+Epoch 002 | LR: 0.000100 | Train MSE: 8.6647 | Val MSE: 7.2146 | Val Rp: 0.160
+Epoch 003 | LR: 0.000100 | Train MSE: 7.5588 | Val MSE: 6.5459 | Val Rp: 0.174
+Epoch 004 | LR: 0.000100 | Train MSE: 7.2174 | Val MSE: 6.1644 | Val Rp: 0.171
+Epoch 005 | LR: 0.000100 | Train MSE: 6.3356 | Val MSE: 5.8405 | Val Rp: 0.184
+Epoch 006 | LR: 0.000100 | Train MSE: 5.8824 | Val MSE: 5.4305 | Val Rp: 0.198
+Epoch 007 | LR: 0.000100 | Train MSE: 5.2702 | Val MSE: 5.0590 | Val Rp: 0.211
+Epoch 008 | LR: 0.000100 | Train MSE: 4.9398 | Val MSE: 4.9377 | Val Rp: 0.228
+Epoch 009 | LR: 0.000100 | Train MSE: 4.5173 | Val MSE: 4.6261 | Val Rp: 0.232
+Epoch 010 | LR: 0.000100 | Train MSE: 3.9170 | Val MSE: 4.4108 | Val Rp: 0.251
+Epoch 011 | LR: 0.000100 | Train MSE: 3.7411 | Val MSE: 4.4812 | Val Rp: 0.272
+Epoch 012 | LR: 0.000100 | Train MSE: 3.6997 | Val MSE: 4.4755 | Val Rp: 0.272
+Epoch 013 | LR: 0.000100 | Train MSE: 3.6281 | Val MSE: 4.6524 | Val Rp: 0.296
+Epoch 014 | LR: 0.000100 | Train MSE: 3.4289 | Val MSE: 4.5526 | Val Rp: 0.285
+Epoch 015 | LR: 0.000100 | Train MSE: 3.1654 | Val MSE: 4.2334 | Val Rp: 0.331
+Epoch 016 | LR: 0.000100 | Train MSE: 2.9152 | Val MSE: 4.0119 | Val Rp: 0.348
+Epoch 017 | LR: 0.000100 | Train MSE: 2.8728 | Val MSE: 4.3588 | Val Rp: 0.341
+Epoch 018 | LR: 0.000100 | Train MSE: 2.7772 | Val MSE: 3.8939 | Val Rp: 0.370
+Epoch 019 | LR: 0.000100 | Train MSE: 2.7562 | Val MSE: 3.9563 | Val Rp: 0.374
+Epoch 020 | LR: 0.000100 | Train MSE: 2.6654 | Val MSE: 3.6461 | Val Rp: 0.406
+Epoch 021 | LR: 0.000100 | Train MSE: 2.4793 | Val MSE: 3.8519 | Val Rp: 0.374
+Epoch 022 | LR: 0.000100 | Train MSE: 2.5436 | Val MSE: 4.0343 | Val Rp: 0.394
+Epoch 023 | LR: 0.000100 | Train MSE: 2.5179 | Val MSE: 4.0844 | Val Rp: 0.364
+Epoch 024 | LR: 0.000100 | Train MSE: 2.3622 | Val MSE: 3.8723 | Val Rp: 0.403
+Epoch 025 | LR: 0.000100 | Train MSE: 2.3457 | Val MSE: 3.8302 | Val Rp: 0.410
+Epoch 026 | LR: 0.000100 | Train MSE: 2.2274 | Val MSE: 3.8756 | Val Rp: 0.418
+Epoch 027 | LR: 0.000100 | Train MSE: 2.1097 | Val MSE: 3.9047 | Val Rp: 0.427
+Epoch 028 | LR: 0.000100 | Train MSE: 2.1306 | Val MSE: 3.8757 | Val Rp: 0.431
+Epoch 029 | LR: 0.000100 | Train MSE: 2.1106 | Val MSE: 3.6938 | Val Rp: 0.416
+Epoch 030 | LR: 0.000100 | Train MSE: 2.0404 | Val MSE: 3.7195 | Val Rp: 0.429
+Epoch 031 | LR: 0.000100 | Train MSE: 1.9460 | Val MSE: 3.6930 | Val Rp: 0.447
+Epoch 032 | LR: 0.000100 | Train MSE: 1.9019 | Val MSE: 4.1671 | Val Rp: 0.436
+Epoch 033 | LR: 0.000100 | Train MSE: 1.8490 | Val MSE: 3.9566 | Val Rp: 0.445
+Epoch 034 | LR: 0.000100 | Train MSE: 1.8053 | Val MSE: 3.7762 | Val Rp: 0.439
+Epoch 035 | LR: 0.000100 | Train MSE: 1.6671 | Val MSE: 4.0048 | Val Rp: 0.450
+Epoch 036 | LR: 0.000100 | Train MSE: 1.6783 | Val MSE: 4.1784 | Val Rp: 0.420
+Epoch 037 | LR: 0.000100 | Train MSE: 1.7606 | Val MSE: 4.4958 | Val Rp: 0.402
+Epoch 038 | LR: 0.000100 | Train MSE: 1.7117 | Val MSE: 4.1646 | Val Rp: 0.415
+Epoch 039 | LR: 0.000100 | Train MSE: 1.6186 | Val MSE: 4.1354 | Val Rp: 0.450
+Epoch 040 | LR: 0.000100 | Train MSE: 1.6019 | Val MSE: 4.0505 | Val Rp: 0.442
+Epoch 041 | LR: 0.000100 | Train MSE: 1.4948 | Val MSE: 4.3908 | Val Rp: 0.428
+Epoch 042 | LR: 0.000100 | Train MSE: 1.5312 | Val MSE: 3.9795 | Val Rp: 0.411
+Epoch 043 | LR: 0.000100 | Train MSE: 1.4033 | Val MSE: 4.3091 | Val Rp: 0.441
+Epoch 044 | LR: 0.000100 | Train MSE: 1.4378 | Val MSE: 4.6115 | Val Rp: 0.425
+Epoch 045 | LR: 0.000100 | Train MSE: 1.4444 | Val MSE: 4.3801 | Val Rp: 0.402
+Epoch 046 | LR: 0.000100 | Train MSE: 1.3303 | Val MSE: 4.3350 | Val Rp: 0.428
+Epoch 047 | LR: 0.000050 | Train MSE: 1.4810 | Val MSE: 7.0345 | Val Rp: 0.358
+Epoch 048 | LR: 0.000050 | Train MSE: 1.9701 | Val MSE: 7.0700 | Val Rp: 0.416
+Epoch 049 | LR: 0.000050 | Train MSE: 2.2012 | Val MSE: 4.4820 | Val Rp: 0.390
+Epoch 050 | LR: 0.000050 | Train MSE: 1.8916 | Val MSE: 3.3947 | Val Rp: 0.425
+Early Stopping Triggered, stopped at Epoch 50
+
+ Loading the best model for seed_0...
+
+ Test Score for seed_0 
+Rp: 0.2675 | Rs: 0.1149 | RMSE: 1.8413 | MAE: 1.5169
+
+====================
+Running seed seed_1...
+====================
+
+ Loading Datasets for seed_1...
+/root/miniconda3/envs/proaffinity/lib/python3.8/site-packages/torch/optim/lr_scheduler.py:28: UserWarning: The verbose parameter is deprecated. Please use get_last_lr() to access the learning rate.
+  warnings.warn("The verbose parameter is deprecated. Please use get_last_lr() "
+
+ Start training seed_1...
+Epoch 001 | LR: 0.000100 | Train MSE: 29.1559 | Val MSE: 17.4310 | Val Rp: 0.055
+Epoch 002 | LR: 0.000100 | Train MSE: 11.1762 | Val MSE: 10.6431 | Val Rp: 0.086
+Epoch 003 | LR: 0.000100 | Train MSE: 9.5896 | Val MSE: 8.0048 | Val Rp: 0.121
+Epoch 004 | LR: 0.000100 | Train MSE: 7.9588 | Val MSE: 6.3466 | Val Rp: 0.154
+Epoch 005 | LR: 0.000100 | Train MSE: 6.7263 | Val MSE: 5.1303 | Val Rp: 0.186
+Epoch 006 | LR: 0.000100 | Train MSE: 6.3920 | Val MSE: 4.7329 | Val Rp: 0.209
+Epoch 007 | LR: 0.000100 | Train MSE: 6.2250 | Val MSE: 4.4963 | Val Rp: 0.220
+Epoch 008 | LR: 0.000100 | Train MSE: 5.6891 | Val MSE: 4.0762 | Val Rp: 0.237
+Epoch 009 | LR: 0.000100 | Train MSE: 5.1907 | Val MSE: 3.7928 | Val Rp: 0.261
+Epoch 010 | LR: 0.000100 | Train MSE: 5.0257 | Val MSE: 3.6875 | Val Rp: 0.278
+Epoch 011 | LR: 0.000100 | Train MSE: 4.6796 | Val MSE: 3.1943 | Val Rp: 0.301
+Epoch 012 | LR: 0.000100 | Train MSE: 4.0647 | Val MSE: 3.0052 | Val Rp: 0.314
+Epoch 013 | LR: 0.000100 | Train MSE: 4.1079 | Val MSE: 2.8868 | Val Rp: 0.340
+Epoch 014 | LR: 0.000100 | Train MSE: 3.7960 | Val MSE: 2.6727 | Val Rp: 0.369
+Epoch 015 | LR: 0.000100 | Train MSE: 3.5438 | Val MSE: 2.6544 | Val Rp: 0.372
+Epoch 016 | LR: 0.000100 | Train MSE: 3.3012 | Val MSE: 2.5648 | Val Rp: 0.377
+Epoch 017 | LR: 0.000100 | Train MSE: 3.1484 | Val MSE: 2.5521 | Val Rp: 0.403
+Epoch 018 | LR: 0.000100 | Train MSE: 3.1997 | Val MSE: 2.3163 | Val Rp: 0.403
+Epoch 019 | LR: 0.000100 | Train MSE: 2.8740 | Val MSE: 2.3313 | Val Rp: 0.412
+Epoch 020 | LR: 0.000100 | Train MSE: 3.0094 | Val MSE: 2.3852 | Val Rp: 0.416
+Epoch 021 | LR: 0.000100 | Train MSE: 2.8309 | Val MSE: 2.2521 | Val Rp: 0.418
+Epoch 022 | LR: 0.000100 | Train MSE: 2.7375 | Val MSE: 2.2355 | Val Rp: 0.409
+Epoch 023 | LR: 0.000100 | Train MSE: 2.6839 | Val MSE: 2.2854 | Val Rp: 0.412
+Epoch 024 | LR: 0.000100 | Train MSE: 2.6269 | Val MSE: 2.3129 | Val Rp: 0.389
+Epoch 025 | LR: 0.000100 | Train MSE: 2.5552 | Val MSE: 2.2004 | Val Rp: 0.422
+Epoch 026 | LR: 0.000100 | Train MSE: 2.5119 | Val MSE: 2.1534 | Val Rp: 0.430
+Epoch 027 | LR: 0.000100 | Train MSE: 2.4353 | Val MSE: 2.2197 | Val Rp: 0.426
+Epoch 028 | LR: 0.000100 | Train MSE: 2.2248 | Val MSE: 2.1761 | Val Rp: 0.441
+Epoch 029 | LR: 0.000100 | Train MSE: 2.2337 | Val MSE: 2.2093 | Val Rp: 0.446
+Epoch 030 | LR: 0.000100 | Train MSE: 2.2135 | Val MSE: 2.3393 | Val Rp: 0.424
+Epoch 031 | LR: 0.000100 | Train MSE: 2.0247 | Val MSE: 2.2945 | Val Rp: 0.417
+Epoch 032 | LR: 0.000100 | Train MSE: 1.9760 | Val MSE: 2.3973 | Val Rp: 0.415
+Epoch 033 | LR: 0.000100 | Train MSE: 1.8956 | Val MSE: 2.3451 | Val Rp: 0.398
+Epoch 034 | LR: 0.000100 | Train MSE: 1.8187 | Val MSE: 2.6922 | Val Rp: 0.393
+Epoch 035 | LR: 0.000100 | Train MSE: 1.8383 | Val MSE: 2.5611 | Val Rp: 0.379
+Epoch 036 | LR: 0.000100 | Train MSE: 1.7001 | Val MSE: 2.4207 | Val Rp: 0.396
+Epoch 037 | LR: 0.000100 | Train MSE: 1.7190 | Val MSE: 2.6267 | Val Rp: 0.398
+Epoch 038 | LR: 0.000100 | Train MSE: 1.6213 | Val MSE: 2.7284 | Val Rp: 0.405
+Epoch 039 | LR: 0.000100 | Train MSE: 1.6042 | Val MSE: 2.9610 | Val Rp: 0.394
+Epoch 040 | LR: 0.000100 | Train MSE: 1.5646 | Val MSE: 2.9813 | Val Rp: 0.383
+Epoch 041 | LR: 0.000050 | Train MSE: 1.6655 | Val MSE: 2.7836 | Val Rp: 0.402
+Epoch 042 | LR: 0.000050 | Train MSE: 1.6373 | Val MSE: 2.9193 | Val Rp: 0.389
+Epoch 043 | LR: 0.000050 | Train MSE: 1.7877 | Val MSE: 3.0203 | Val Rp: 0.385
+Epoch 044 | LR: 0.000050 | Train MSE: 2.0229 | Val MSE: 3.7214 | Val Rp: 0.393
+Early Stopping Triggered, stopped at Epoch 44
+
+ Loading the best model for seed_1...
+
+ Test Score for seed_1 
+Rp: 0.4608 | Rs: 0.4589 | RMSE: 1.4166 | MAE: 1.0595
+
+====================
+Running seed seed_42...
+====================
+
+ Loading Datasets for seed_42...
+/root/miniconda3/envs/proaffinity/lib/python3.8/site-packages/torch/optim/lr_scheduler.py:28: UserWarning: The verbose parameter is deprecated. Please use get_last_lr() to access the learning rate.
+  warnings.warn("The verbose parameter is deprecated. Please use get_last_lr() "
+
+ Start training seed_42...
+Epoch 001 | LR: 0.000100 | Train MSE: 28.2977 | Val MSE: 16.2786 | Val Rp: 0.155
+Epoch 002 | LR: 0.000100 | Train MSE: 10.6754 | Val MSE: 8.7425 | Val Rp: 0.181
+Epoch 003 | LR: 0.000100 | Train MSE: 8.5626 | Val MSE: 5.8169 | Val Rp: 0.207
+Epoch 004 | LR: 0.000100 | Train MSE: 6.4001 | Val MSE: 4.4083 | Val Rp: 0.230
+Epoch 005 | LR: 0.000100 | Train MSE: 5.8167 | Val MSE: 3.5589 | Val Rp: 0.255
+Epoch 006 | LR: 0.000100 | Train MSE: 5.6836 | Val MSE: 3.3734 | Val Rp: 0.269
+Epoch 007 | LR: 0.000100 | Train MSE: 4.7144 | Val MSE: 2.7282 | Val Rp: 0.303
+Epoch 008 | LR: 0.000100 | Train MSE: 4.3034 | Val MSE: 2.5341 | Val Rp: 0.310
+Epoch 009 | LR: 0.000100 | Train MSE: 4.2830 | Val MSE: 2.1827 | Val Rp: 0.333
+Epoch 010 | LR: 0.000100 | Train MSE: 3.9730 | Val MSE: 2.2036 | Val Rp: 0.340
+Epoch 011 | LR: 0.000100 | Train MSE: 3.4893 | Val MSE: 2.1094 | Val Rp: 0.337
+Epoch 012 | LR: 0.000100 | Train MSE: 3.6482 | Val MSE: 2.2083 | Val Rp: 0.308
+Epoch 013 | LR: 0.000100 | Train MSE: 3.3337 | Val MSE: 1.8816 | Val Rp: 0.343
+Epoch 014 | LR: 0.000100 | Train MSE: 3.3614 | Val MSE: 2.2372 | Val Rp: 0.331
+Epoch 015 | LR: 0.000100 | Train MSE: 3.4468 | Val MSE: 2.2999 | Val Rp: 0.333
+Epoch 016 | LR: 0.000100 | Train MSE: 3.6319 | Val MSE: 3.0382 | Val Rp: 0.348
+Epoch 017 | LR: 0.000100 | Train MSE: 3.8580 | Val MSE: 3.3602 | Val Rp: 0.321
+Epoch 018 | LR: 0.000100 | Train MSE: 3.6920 | Val MSE: 3.7997 | Val Rp: 0.324
+Epoch 019 | LR: 0.000100 | Train MSE: 3.3190 | Val MSE: 3.2823 | Val Rp: 0.333
+Epoch 020 | LR: 0.000100 | Train MSE: 3.0274 | Val MSE: 3.2871 | Val Rp: 0.331
+Epoch 021 | LR: 0.000100 | Train MSE: 2.7323 | Val MSE: 2.7852 | Val Rp: 0.323
+Epoch 022 | LR: 0.000100 | Train MSE: 2.5761 | Val MSE: 2.7207 | Val Rp: 0.327
+Epoch 023 | LR: 0.000100 | Train MSE: 2.4278 | Val MSE: 2.5784 | Val Rp: 0.314
+Epoch 024 | LR: 0.000100 | Train MSE: 2.4096 | Val MSE: 2.4918 | Val Rp: 0.311
+Epoch 025 | LR: 0.000100 | Train MSE: 2.3220 | Val MSE: 2.5432 | Val Rp: 0.319
+Epoch 026 | LR: 0.000100 | Train MSE: 2.3187 | Val MSE: 2.7453 | Val Rp: 0.304
+Epoch 027 | LR: 0.000100 | Train MSE: 2.3637 | Val MSE: 2.5958 | Val Rp: 0.330
+Epoch 028 | LR: 0.000050 | Train MSE: 2.2649 | Val MSE: 2.9084 | Val Rp: 0.302
+Epoch 029 | LR: 0.000050 | Train MSE: 2.2526 | Val MSE: 2.4337 | Val Rp: 0.308
+Epoch 030 | LR: 0.000050 | Train MSE: 2.1846 | Val MSE: 2.2942 | Val Rp: 0.320
+Epoch 031 | LR: 0.000050 | Train MSE: 2.1050 | Val MSE: 2.1675 | Val Rp: 0.314
+Early Stopping Triggered, stopped at Epoch 31
+
+ Loading the best model for seed_42...
+
+ Test Score for seed_42 
+Rp: 0.1180 | Rs: 0.1485 | RMSE: 2.7694 | MAE: 2.1193
+
+====================
+Running seed seed_142...
+====================
+
+ Loading Datasets for seed_142...
+/root/miniconda3/envs/proaffinity/lib/python3.8/site-packages/torch/optim/lr_scheduler.py:28: UserWarning: The verbose parameter is deprecated. Please use get_last_lr() to access the learning rate.
+  warnings.warn("The verbose parameter is deprecated. Please use get_last_lr() "
+
+ Start training seed_142...
+Epoch 001 | LR: 0.000100 | Train MSE: 25.6914 | Val MSE: 11.7152 | Val Rp: 0.164
+Epoch 002 | LR: 0.000100 | Train MSE: 10.4943 | Val MSE: 7.0961 | Val Rp: 0.169
+Epoch 003 | LR: 0.000100 | Train MSE: 8.3179 | Val MSE: 6.2163 | Val Rp: 0.161
+Epoch 004 | LR: 0.000100 | Train MSE: 7.3093 | Val MSE: 5.8136 | Val Rp: 0.159
+Epoch 005 | LR: 0.000100 | Train MSE: 6.6112 | Val MSE: 5.5237 | Val Rp: 0.158
+Epoch 006 | LR: 0.000100 | Train MSE: 6.4238 | Val MSE: 4.9904 | Val Rp: 0.163
+Epoch 007 | LR: 0.000100 | Train MSE: 5.5939 | Val MSE: 4.6680 | Val Rp: 0.161
+Epoch 008 | LR: 0.000100 | Train MSE: 5.2217 | Val MSE: 4.3736 | Val Rp: 0.159
+Epoch 009 | LR: 0.000100 | Train MSE: 4.5713 | Val MSE: 4.1377 | Val Rp: 0.162
+Epoch 010 | LR: 0.000100 | Train MSE: 4.2449 | Val MSE: 4.0619 | Val Rp: 0.159
+Epoch 011 | LR: 0.000100 | Train MSE: 4.1087 | Val MSE: 3.9512 | Val Rp: 0.153
+Epoch 012 | LR: 0.000100 | Train MSE: 3.8681 | Val MSE: 4.0254 | Val Rp: 0.147
+Epoch 013 | LR: 0.000100 | Train MSE: 3.6179 | Val MSE: 3.7101 | Val Rp: 0.176
+Epoch 014 | LR: 0.000100 | Train MSE: 3.4656 | Val MSE: 3.5723 | Val Rp: 0.187
+Epoch 015 | LR: 0.000100 | Train MSE: 3.2060 | Val MSE: 3.5278 | Val Rp: 0.195
+Epoch 016 | LR: 0.000100 | Train MSE: 3.1820 | Val MSE: 3.5990 | Val Rp: 0.204
+Epoch 017 | LR: 0.000100 | Train MSE: 3.0085 | Val MSE: 3.5530 | Val Rp: 0.213
+Epoch 018 | LR: 0.000100 | Train MSE: 2.8335 | Val MSE: 3.5017 | Val Rp: 0.231
+Epoch 019 | LR: 0.000100 | Train MSE: 2.7829 | Val MSE: 3.4981 | Val Rp: 0.225
+Epoch 020 | LR: 0.000100 | Train MSE: 2.7362 | Val MSE: 3.5507 | Val Rp: 0.226
+Epoch 021 | LR: 0.000100 | Train MSE: 2.6680 | Val MSE: 3.5693 | Val Rp: 0.223
+Epoch 022 | LR: 0.000100 | Train MSE: 2.5380 | Val MSE: 3.6363 | Val Rp: 0.232
+Epoch 023 | LR: 0.000100 | Train MSE: 2.5685 | Val MSE: 3.5784 | Val Rp: 0.237
+Epoch 024 | LR: 0.000100 | Train MSE: 2.2915 | Val MSE: 3.6142 | Val Rp: 0.238
+Epoch 025 | LR: 0.000100 | Train MSE: 2.3229 | Val MSE: 3.6528 | Val Rp: 0.225
+Epoch 026 | LR: 0.000100 | Train MSE: 2.3386 | Val MSE: 3.7597 | Val Rp: 0.219
+Epoch 027 | LR: 0.000100 | Train MSE: 2.3047 | Val MSE: 3.5678 | Val Rp: 0.216
+Epoch 028 | LR: 0.000100 | Train MSE: 2.2023 | Val MSE: 3.7868 | Val Rp: 0.205
+Epoch 029 | LR: 0.000100 | Train MSE: 2.1360 | Val MSE: 3.6893 | Val Rp: 0.190
+Epoch 030 | LR: 0.000100 | Train MSE: 2.0482 | Val MSE: 3.7670 | Val Rp: 0.203
+Epoch 031 | LR: 0.000100 | Train MSE: 2.1027 | Val MSE: 3.6580 | Val Rp: 0.211
+Epoch 032 | LR: 0.000100 | Train MSE: 1.9823 | Val MSE: 3.7191 | Val Rp: 0.185
+Epoch 033 | LR: 0.000100 | Train MSE: 1.9460 | Val MSE: 3.8107 | Val Rp: 0.174
+Epoch 034 | LR: 0.000100 | Train MSE: 1.8745 | Val MSE: 3.8421 | Val Rp: 0.188
+Epoch 035 | LR: 0.000100 | Train MSE: 1.8245 | Val MSE: 3.8423 | Val Rp: 0.167
+Epoch 036 | LR: 0.000050 | Train MSE: 1.8050 | Val MSE: 4.0458 | Val Rp: 0.155
+Epoch 037 | LR: 0.000050 | Train MSE: 1.8455 | Val MSE: 3.9708 | Val Rp: 0.162
+Epoch 038 | LR: 0.000050 | Train MSE: 1.7568 | Val MSE: 3.8726 | Val Rp: 0.166
+Epoch 039 | LR: 0.000050 | Train MSE: 1.7858 | Val MSE: 3.7278 | Val Rp: 0.165
+Early Stopping Triggered, stopped at Epoch 39
+
+ Loading the best model for seed_142...
+
+ Test Score for seed_142 
+Rp: 0.1471 | Rs: 0.1672 | RMSE: 1.8468 | MAE: 1.4358
+
+====================
+Running seed seed_4242...
+====================
+
+ Loading Datasets for seed_4242...
+/root/miniconda3/envs/proaffinity/lib/python3.8/site-packages/torch/optim/lr_scheduler.py:28: UserWarning: The verbose parameter is deprecated. Please use get_last_lr() to access the learning rate.
+  warnings.warn("The verbose parameter is deprecated. Please use get_last_lr() "
+
+ Start training seed_4242...
+Epoch 001 | LR: 0.000100 | Train MSE: 25.5549 | Val MSE: 14.3454 | Val Rp: 0.203
+Epoch 002 | LR: 0.000100 | Train MSE: 9.3756 | Val MSE: 9.2309 | Val Rp: 0.213
+Epoch 003 | LR: 0.000100 | Train MSE: 7.8079 | Val MSE: 7.6036 | Val Rp: 0.223
+Epoch 004 | LR: 0.000100 | Train MSE: 6.9967 | Val MSE: 6.2565 | Val Rp: 0.233
+Epoch 005 | LR: 0.000100 | Train MSE: 6.0133 | Val MSE: 6.2968 | Val Rp: 0.248
+Epoch 006 | LR: 0.000100 | Train MSE: 5.5707 | Val MSE: 5.9323 | Val Rp: 0.265
+Epoch 007 | LR: 0.000100 | Train MSE: 5.5162 | Val MSE: 6.3599 | Val Rp: 0.267
+Epoch 008 | LR: 0.000100 | Train MSE: 5.1045 | Val MSE: 5.7895 | Val Rp: 0.277
+Epoch 009 | LR: 0.000100 | Train MSE: 4.4825 | Val MSE: 5.0900 | Val Rp: 0.293
+Epoch 010 | LR: 0.000100 | Train MSE: 4.0991 | Val MSE: 5.0829 | Val Rp: 0.297
+Epoch 011 | LR: 0.000100 | Train MSE: 3.8519 | Val MSE: 4.5911 | Val Rp: 0.320
+Epoch 012 | LR: 0.000100 | Train MSE: 3.6903 | Val MSE: 4.5164 | Val Rp: 0.332
+Epoch 013 | LR: 0.000100 | Train MSE: 3.3484 | Val MSE: 4.3990 | Val Rp: 0.338
+Epoch 014 | LR: 0.000100 | Train MSE: 3.2004 | Val MSE: 3.8007 | Val Rp: 0.358
+Epoch 015 | LR: 0.000100 | Train MSE: 2.8593 | Val MSE: 3.8169 | Val Rp: 0.368
+Epoch 016 | LR: 0.000100 | Train MSE: 2.6946 | Val MSE: 3.7947 | Val Rp: 0.384
+Epoch 017 | LR: 0.000100 | Train MSE: 2.9362 | Val MSE: 3.9555 | Val Rp: 0.397
+Epoch 018 | LR: 0.000100 | Train MSE: 2.6354 | Val MSE: 3.8239 | Val Rp: 0.415
+Epoch 019 | LR: 0.000100 | Train MSE: 2.4774 | Val MSE: 3.5080 | Val Rp: 0.430
+Epoch 020 | LR: 0.000100 | Train MSE: 2.4216 | Val MSE: 3.5681 | Val Rp: 0.427
+Epoch 021 | LR: 0.000100 | Train MSE: 2.3527 | Val MSE: 3.6721 | Val Rp: 0.413
+Epoch 022 | LR: 0.000100 | Train MSE: 2.4490 | Val MSE: 3.7580 | Val Rp: 0.439
+Epoch 023 | LR: 0.000100 | Train MSE: 2.3585 | Val MSE: 4.2123 | Val Rp: 0.413
+Epoch 024 | LR: 0.000100 | Train MSE: 2.2494 | Val MSE: 4.1497 | Val Rp: 0.422
+Epoch 025 | LR: 0.000100 | Train MSE: 2.2463 | Val MSE: 4.1139 | Val Rp: 0.435
+Epoch 026 | LR: 0.000100 | Train MSE: 2.1905 | Val MSE: 4.3541 | Val Rp: 0.409
+Epoch 027 | LR: 0.000100 | Train MSE: 2.2531 | Val MSE: 4.6199 | Val Rp: 0.397
+Epoch 028 | LR: 0.000100 | Train MSE: 2.1710 | Val MSE: 4.4465 | Val Rp: 0.384
+Epoch 029 | LR: 0.000100 | Train MSE: 2.1146 | Val MSE: 4.8424 | Val Rp: 0.393
+Epoch 030 | LR: 0.000100 | Train MSE: 2.1124 | Val MSE: 4.8443 | Val Rp: 0.380
+Epoch 031 | LR: 0.000100 | Train MSE: 2.0269 | Val MSE: 4.6001 | Val Rp: 0.364
+Epoch 032 | LR: 0.000100 | Train MSE: 1.9624 | Val MSE: 4.8958 | Val Rp: 0.367
+Epoch 033 | LR: 0.000100 | Train MSE: 1.9656 | Val MSE: 4.6728 | Val Rp: 0.376
+Epoch 034 | LR: 0.000050 | Train MSE: 1.9005 | Val MSE: 4.1825 | Val Rp: 0.387
+Epoch 035 | LR: 0.000050 | Train MSE: 1.9077 | Val MSE: 3.2497 | Val Rp: 0.433
+Epoch 036 | LR: 0.000050 | Train MSE: 1.8718 | Val MSE: 3.2093 | Val Rp: 0.416
+Epoch 037 | LR: 0.000050 | Train MSE: 1.7622 | Val MSE: 3.6047 | Val Rp: 0.386
+Early Stopping Triggered, stopped at Epoch 37
+
+ Loading the best model for seed_4242...
+
+ Test Score for seed_4242 
+Rp: 0.2376 | Rs: 0.2052 | RMSE: 1.9186 | MAE: 1.3807
+
+==================================================
+ FINAL 5-SEED AVERAGE RESULTS 
+==================================================
+Pearson (Rp):  0.2462 ± 0.1207
+Spearman (Rs): 0.2189 ± 0.1235
+RMSE:          1.9585 ± 0.4425
+MAE:           1.5025 ± 0.3453
+==================================================

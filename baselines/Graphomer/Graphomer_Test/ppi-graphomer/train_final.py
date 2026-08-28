@@ -168,9 +168,9 @@ if __name__ == '__main__':
         generate_cmd = (
             f"python generate_batch.py "
             f"--data ./checked_data "
-            f"--gpu_path /root/autodl-tmp/preprocess_gpu_data "
+            f"--gpu_path ./preprocess_gpu_data "
             f"--batch_path {temp_batch_dir} "
-            f"--csv_dir /root/autodl-tmp/Graphomer_Test/random_seeds_splits/{seed}"
+            f"--csv_dir ../../../../data/mmseqs_seeds_splits/{seed}"
         )
         subprocess.run(generate_cmd, shell=True, check=True)
 
@@ -266,7 +266,7 @@ if __name__ == '__main__':
         plt.savefig(os.path.join(seed_save_dir, f'loss_curve_{seed}.png'))
         plt.close('all')
         
-        print(f"\n[3/3] Performing Deep Clean for {seed}...")
+        print(f"\n [3/3] Performing Deep Clean for {seed}...")
         shutil.rmtree(temp_batch_dir, ignore_errors=True)
         del train_data_dict, val_data_dict, test_data_dict
         del train_loader, val_loader, test_loader

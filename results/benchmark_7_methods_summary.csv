@@ -1,0 +1,8 @@
+method,score_definition,metric_protocol,pearson_mean,pearson_population_sd,spearman_mean,spearman_population_sd,rmse_mean,rmse_population_sd,mae_mean,mae_population_sd,source_log
+ProAffinity,Direct predicted pKd,All four metrics are computed directly from test-set predictions.,0.2462,0.1207,0.2189,0.1235,1.9585,0.4425,1.5025,0.3453,trainlog_mmseqs_proaffinity.txt
+Graphomer,Direct predicted pKd,All four metrics are computed directly from test-set predictions.,0.3874,0.0686,0.3638,0.0695,1.5649,0.2396,1.2005,0.1510,trainlog_mmseqs_graphomer(1).txt
+GearNet-Res,Direct predicted pKd,All four metrics are computed directly from test-set predictions.,0.2173,0.0627,0.2111,0.0460,1.8592,0.2378,1.4120,0.1273,trainlog_mmseqs_gearnetres (1).txt
+GearNet-Atom,Direct predicted pKd,All four metrics are computed directly from test-set predictions.,0.1387,0.1138,0.1431,0.0837,1.7122,0.2303,1.3255,0.1469,trainlog_mmseqs_gearnetstom (1).txt
+Frozen ESM2-3B + MLP Head,Direct predicted pKd from frozen ESM2-3B pair embeddings and an MLP head,All four metrics are computed directly from test-set predictions.,0.3391,0.1184,0.3271,0.1290,1.6495,0.1786,1.2721,0.1393,esm2_3b_head_resume (1).log
+FoldX,-Interaction Energy (kcal/mol),Rp/Rs use the raw physical score; RMSE/MAE use an affine calibration fitted on the training split only.,0.2218,0.1250,0.2468,0.1116,1.6562,0.2570,1.2840,0.1553,foldx_analysis.log
+Rosetta InterfaceAnalyzer,Primary score: -dG_separated (REU),Rp/Rs use the raw primary physical score; RMSE/MAE use an affine calibration fitted on the training split only.,0.1683,0.0600,0.2099,0.1382,1.6631,0.2454,1.2944,0.1503,rosetta_analysis.log

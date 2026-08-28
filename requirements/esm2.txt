@@ -1,0 +1,9 @@
+# Install the matching CUDA build of PyTorch before this file.
+# See ENVIRONMENT_SETUP.md.
+
+numpy>=1.23,<2
+pandas>=1.5,<3
+scipy>=1.9,<2
+tqdm>=4.64,<5
+transformers==4.37.2
+

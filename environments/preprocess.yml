@@ -1,0 +1,9 @@
+name: ppi-preprocess
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.10
+  - openbabel
+  - mmseqs2
+

@@ -138,7 +138,12 @@ if __name__ == '__main__':
     parser.add_argument("--gpu_path", '-g', default="./data/preprocess/gpu/default/", type=str, help="gpu data path")
     parser.add_argument("--batch_path", '-b', default="./data/batchs/", type=str, help="batch data base path")
     
-    parser.add_argument("--csv_dir", '-c', default="/root/autodl-tmp/Graphomer_Test", type=str, help="CSV files directory")
+    parser.add_argument(
+        "--csv_dir", "-c",
+        required=True,
+        type=str,
+        help="Directory containing one seed's train_split.csv, val_split.csv, and test_split.csv",
+    )
     args = parser.parse_args()
 
     # 1. load data
